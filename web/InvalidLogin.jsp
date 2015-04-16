@@ -1,0 +1,29 @@
+<%-- 
+    Document   : InvalidLogin
+    Created on : 8-Apr-2015, 11:42:57 PM
+    Author     : c0650853
+--%>
+
+<%@ page language="java" 
+      contentType="text/html; charset=UTF-8"
+      pageEncoding="UTF-8"
+   %>
+
+   <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"    
+      "http://www.w3.org/TR/html4/loose.dtd">
+
+   <html>
+
+      <head>
+         <meta http-equiv="Content-Type" 
+            content="text/html; charset=UTF-8">
+         <title>Invalid Login</title>
+      </head>
+	
+      <body>
+         <center>
+            Sorry, you are not a registered user! Please sign up first
+         </center>
+      </body>
+	
+   </html>

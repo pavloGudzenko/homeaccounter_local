@@ -6,6 +6,7 @@
 
 package restful;
 
+import credentials.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,15 +27,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import credentials.DBConnection;
 
 /**
  *
  * @author c0650853
  */
-@Path("/income")
-public class IncomeRestful {
-   @GET
+@Path("/expences")
+public class ExpencesRestful {
+      @GET
     @Produces("application/json")
     public Response findAll() throws IOException {
         return Response.ok(getResults("SELECT * FROM incomes")).build();
@@ -57,10 +57,10 @@ public class IncomeRestful {
           int rowsInserted = 0;
           Response response;
                 String account_id = json.getString("account_id");
-                String inc_amount = json.getString("inc_amount");
-                String inc_category_id = json.getString("inc_category_id");
-                String inc_date = json.getString("inc_date");
-         rowsInserted = doUpdate("INSERT INTO incomes (account_id, inc_ammount, inc_category_id, inc_date) VALUES (?, ?, ?, ?)", account_id, inc_amount, inc_category_id, inc_date);
+                String exp_amount = json.getString("exp_amount");
+                String exp_category_id = json.getString("exp_category_id");
+                String exp_date = json.getString("exp_date");
+         rowsInserted = doUpdate("INSERT INTO incomes (account_id, exp_ammount, exp_category_id, exp_date) VALUES (?, ?, ?, ?)", account_id, exp_amount, exp_category_id, exp_date);
            if (rowsInserted == 0){
             response = Response.status(500).build();
            } else {
@@ -85,10 +85,10 @@ public class IncomeRestful {
             while (rs.next()) {
                 jsonArray.add(Json.createObjectBuilder()
                         .add("account_id", Integer.toString(rs.getInt("account_id")))
-                        .add("income_id", Integer.toString(rs.getInt("income_id")))
-                        .add("inc_amount", Double.toString(rs.getDouble("inc_ammount")))
-                        .add("inc_category_id", Integer.toString(rs.getInt("inc_category_id")))
-                        .add("inc_date", rs.getString("inc_date")));              
+                        .add("expence_id", Integer.toString(rs.getInt("expence_id")))
+                        .add("exp_amount", Double.toString(rs.getDouble("exp_amount")))
+                        .add("exp_category_id", Integer.toString(rs.getInt("exp_category_id")))
+                        .add("exp_date", rs.getString("exp_date")));              
             }
             
             JSONArray = jsonArray.build();
@@ -114,12 +114,12 @@ public class IncomeRestful {
     
     
     @DELETE
-    @Path("{income_id}")
-    public Response remove(@PathParam("income_id") String income_id) {
+    @Path("{expence_id}")
+    public Response remove(@PathParam("expence_id") String expence_id) {
         Response deleteResponse = null;
         int rowsDeleted = 0;
         
-        rowsDeleted = doUpdate("DELETE FROM incomes WHERE income_id = ?", income_id);
+        rowsDeleted = doUpdate("DELETE FROM expences WHERE expence_id = ?", expence_id);
         
         if (rowsDeleted == 0){
            deleteResponse = Response.status(500).build();
@@ -131,18 +131,18 @@ public class IncomeRestful {
     
 
     @PUT
-    @Path("{income_id}")
+    @Path("{expence_id}")
     @Consumes({"application/json"})
     @Produces({"application/json"})
-    public Response edit(@PathParam("income_id") String income_id, JsonObject json) {
+    public Response edit(@PathParam("expence_id") String expence_id, JsonObject json) {
        int rowsUpdated = 0;
        Response response = null;
                 String account_id = json.getString("account_id");
-                String inc_ammount = json.getString("inc_amount");
-                String inc_category_id = json.getString("inc_category_id");
-                String inc_date = json.getString("inc_date");
-         rowsUpdated = doUpdate("UPDATE product SET account_id = ?, inc_ammount =?, inc_category_id = ? inc_date = ? WHERE income_id = ?", 
-                                                 account_id, inc_ammount, inc_category_id, inc_date, income_id);
+                String exp_ammount = json.getString("exp_amount");
+                String exp_category_id = json.getString("exp_category_id");
+                String exp_date = json.getString("exp_date");
+         rowsUpdated = doUpdate("UPDATE product SET account_id = ?, exp_ammount =?, exp_category_id = ? exp_date = ? WHERE expence_id = ?", 
+                                                 account_id, exp_ammount, exp_category_id, exp_date, expence_id);
            if (rowsUpdated == 0){
             response = Response.status(500).build();
            } else {

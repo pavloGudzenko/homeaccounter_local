@@ -32,20 +32,20 @@ import javax.ws.rs.core.Response;
  *
  * @author c0650853
  */
-@Path("/expences")
+@Path("/expense")
 public class ExpencesRestful {
-      @GET
+    @GET
     @Produces("application/json")
     public Response findAll() throws IOException {
-        return Response.ok(getResults("SELECT * FROM incomes")).build();
+        return Response.ok(getResults("SELECT * FROM expences")).build();
     }
     
     
     @GET
-    @Path("{income_id}")
+    @Path("{expense_id}")
     @Produces("application/json")
-    public Response find(@PathParam("income_id") String income_id) throws IOException {
-        return Response.ok(getResults("SELECT * FROM incomes WHERE income_id = ?", income_id)).build();
+    public Response find(@PathParam("expense_id") String expence_id) throws IOException {
+        return Response.ok(getResults("SELECT * FROM expences WHERE expence_id = ?", expence_id)).build();
     }
 
 
@@ -60,7 +60,7 @@ public class ExpencesRestful {
                 String exp_amount = json.getString("exp_amount");
                 String exp_category_id = json.getString("exp_category_id");
                 String exp_date = json.getString("exp_date");
-         rowsInserted = doUpdate("INSERT INTO incomes (account_id, exp_ammount, exp_category_id, exp_date) VALUES (?, ?, ?, ?)", account_id, exp_amount, exp_category_id, exp_date);
+         rowsInserted = doUpdate("INSERT INTO expences (account_id, exp_ammount, exp_category_id, exp_date) VALUES (?, ?, ?, ?)", account_id, exp_amount, exp_category_id, exp_date);
            if (rowsInserted == 0){
             response = Response.status(500).build();
            } else {
@@ -86,7 +86,7 @@ public class ExpencesRestful {
                 jsonArray.add(Json.createObjectBuilder()
                         .add("account_id", Integer.toString(rs.getInt("account_id")))
                         .add("expence_id", Integer.toString(rs.getInt("expence_id")))
-                        .add("exp_amount", Double.toString(rs.getDouble("exp_amount")))
+                        .add("exp_amount", Double.toString(rs.getDouble("exp_ammount")))
                         .add("exp_category_id", Integer.toString(rs.getInt("exp_category_id")))
                         .add("exp_date", rs.getString("exp_date")));              
             }

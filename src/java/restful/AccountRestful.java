@@ -34,7 +34,7 @@ import javax.ws.rs.core.Response;
  */
 @Path("/account")
 public class AccountRestful {
-     @GET
+    @GET
     @Produces("application/json")
     public Response findAll() throws IOException {
         return Response.ok(getResults("SELECT * FROM accounts")).build();
@@ -82,8 +82,8 @@ public class AccountRestful {
             while (rs.next()) {
                 jsonArray.add(Json.createObjectBuilder()
                         .add("account_id", Integer.toString(rs.getInt("account_id")))
-                        .add("account_name", Integer.toString(rs.getInt("account_name")))
-                        .add("description", Double.toString(rs.getDouble("description"))));              
+                        .add("account_name", rs.getString("account_name"))
+                        .add("description", rs.getString("description")));              
             }
             
             JSONArray = jsonArray.build();

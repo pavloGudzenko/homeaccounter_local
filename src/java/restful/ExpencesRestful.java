@@ -37,15 +37,17 @@ public class ExpencesRestful {
     @GET
     @Produces("application/json")
     public Response findAll() throws IOException {
-        return Response.ok(getResults("SELECT * FROM expences")).build();
+        return Response.ok(getResults("SELECT expence_id, exp_ammount, exp_date, account_name, "
+                + "exp_category_name FROM expences JOIN accounts USING(account_id) "
+                + "JOIN exp_categories USING (exp_category_id) ORDER BY account_name, expence_id")).build();
     }
     
     
     @GET
-    @Path("{expense_id}")
+    @Path("{/list/expense_id}")
     @Produces("application/json")
     public Response find(@PathParam("expense_id") String expence_id) throws IOException {
-        return Response.ok(getResults("SELECT * FROM expences WHERE expence_id = ?", expence_id)).build();
+        return Response.ok(getResultsByID("SELECT * FROM expences WHERE expence_id = ?", expence_id)).build();
     }
 
 
@@ -69,8 +71,36 @@ public class ExpencesRestful {
            return response;
     }
     
+    
+      private JsonArray getResults(String query, String... params) throws IOException {
+        JsonArray JSONArray = null;
 
-    private JsonArray getResults(String query, String... params) throws IOException {
+        try (Connection conn = DBConnection.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            for (int i = 1; i <= params.length; i++) {
+                pstmt.setString(i, params[i - 1]);
+            }
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            JsonArrayBuilder jsonArray = Json.createArrayBuilder();
+            while (rs.next()) {
+                jsonArray.add(Json.createObjectBuilder()
+                        .add("account_name", rs.getString("account_name"))
+                        .add("expence_id", Integer.toString(rs.getInt("income_id")))
+                        .add("exp_amount", Double.toString(rs.getDouble("inc_ammount")))
+                        .add("exp_category_name", rs.getString("inc_category_name"))
+                        .add("exp_date", rs.getString("inc_date")));              
+            }
+            
+            JSONArray = jsonArray.build();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(IncomeRestful.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return JSONArray;
+    }
+
+    private JsonArray getResultsByID(String query, String... params) throws IOException {
         JsonArray JSONArray = null;
 
         try (Connection conn = DBConnection.getConnection()) {
@@ -97,6 +127,7 @@ public class ExpencesRestful {
         }
         return JSONArray;
     }
+    
 
     private int doUpdate(String query, String... params) {
         int numChanges = 0;
@@ -114,7 +145,7 @@ public class ExpencesRestful {
     
     
     @DELETE
-    @Path("{expence_id}")
+    @Path("{/list/expence_id}")
     public Response remove(@PathParam("expence_id") String expence_id) {
         Response deleteResponse = null;
         int rowsDeleted = 0;
@@ -131,7 +162,7 @@ public class ExpencesRestful {
     
 
     @PUT
-    @Path("{expence_id}")
+    @Path("{/list/expence_id}")
     @Consumes({"application/json"})
     @Produces({"application/json"})
     public Response edit(@PathParam("expence_id") String expence_id, JsonObject json) {

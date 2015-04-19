@@ -79,21 +79,13 @@ var id11;
             
             close: function() {
                 $('#now').html("");
-                
-                
-              
+           
             }
-
-
-
 
         });
 
-
-
-
-
     });
+    
     
     $('#forumupdate').on('click', '.updatethisagain', function(){
        

@@ -24,12 +24,10 @@
          	<fieldset id="add_expense">
 			  <legend> Add Expense</legend>
                           
-                          <label for="account">Account</label>
-                          <select name="account" id="account">
-                                 <option></option>
-                          </select>
-                          <br>
-                          <br>
+                        <label for="account">Account</label>
+                        <select id="account"></select>
+                        <br>
+                        <br>
                           
 			  <label for="account_id">Account ID</label>
 			  <input type="text" name="account_id" id="account_id">
@@ -49,11 +47,12 @@
 			  
 			  <label for="exp_category">Expense Category</label>
 			  <select id="exp_category" name="exp_category">
-                                 <option> -- Select category -- </option>
-                                 <option>1</option>
-			         <option>Home</option>
-				 <option>Groceries</option>
-				 <option>Other</option>
+                                 <option> -- Select a Category -- </option>
+			         <option id="1" class="category">Groceries</option>
+				 <option id="2" class="category">Home Rent</option>
+				 <option id="3" class="category">Car Insurance</option>
+                                 <option id="4" class="category">Eating Out</option>
+                                 <option id="5" class="category">Taxes/Fees</option>
 			  </select>
                           <br>
                           <br>

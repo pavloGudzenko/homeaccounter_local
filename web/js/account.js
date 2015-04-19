@@ -1,19 +1,42 @@
-function getAllAccounts() {
- var $select = $('#account');   
-$.ajax({
+$(document).ready(function(){
+
+    
+    $.ajax({
        url: 'app/account',
        method: 'GET',  
        dataType: 'json', 
+      contentType:'application/json',
     success: function( data ) {
-      $select.html('');
- 
-      //iterate over the data and append a select option
-      $.each(data.person, function(key, val){ 
-        $select.append('<option id="' + val.account_id + '">' + val.account_name + '</option>');
+         
+      $.each(data, function(key, item){ 
+        $("#table_account").append("<tr><td>"+item.account_name+"</td><td>"+item.description+"</td><td><input type='button' onclick='' value='Delete'></button></td><td><input type='button' onclick='' value='Update'></button></td></tr>");
       });
   }
 });
-}
+
+
+    $.ajax({
+        url: 'app/account',
+        method: 'GET',
+        dataType: 'json',
+        contentType: 'application/json',
+            success: function(data) {
+                $.each(data, function(key, item) {
+                    $("#account").append("<option id="+item.account_id+">" + item.account_name + "</option>");
+            });
+        }
+    });
+    
+    
+    
+    
+
+
+    
+});
+
+
+
 
 
 

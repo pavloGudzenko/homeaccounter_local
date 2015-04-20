@@ -36,7 +36,7 @@
 
             <h1>Expenses Form</h1>
 
-            <form>
+         <form>
 
                 <fieldset id="add_expense">
                     <legend> Add Expense</legend>
@@ -72,7 +72,7 @@
                     <input type="button" onclick="addExpense()" value="Add Expense"></button>
 
                 </fieldset>
-            </form>
+        </form>
 
         </section>
         <br>

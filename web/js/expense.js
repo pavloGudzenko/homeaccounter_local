@@ -1,18 +1,22 @@
  $(document).ready(function(){
 
     
-//    $.ajax({
-//       url: 'app/account',
-//       method: 'GET',  
-//       dataType: 'json', 
-//      contentType:'application/json',
-//    success: function( data ) {
-//         
-//      $.each(data, function(key, item){ 
-//        $("#table_account").append("<tr><td>"+item.account_name+"</td><td>"+item.description+"</td></tr>");
-//      });
-//  }
-//});
+var id11;
+
+    $.ajax({
+        url: 'app/expense',
+        method: 'GET',
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(data) {
+
+            $.each(data, function(key, item) {
+                $("#table_expense").append("<tr id=" + item.expence_id + "><td><span id=name>" + item.account_name + "</span></td><td>" + item.exp_amount + "</td><td>" + item.exp_category_name + "</td><td>" + item.exp_date + "</td><td><input type='button' onclick='' id=" + item.expence_id + " class='deletethis' value='Delete'></button></td><td><input type='button' id=" + item.expence_id + " class='updatethis'  value='Update'></button></td></tr>");
+            });
+        }
+    });
+    
+    
     $.ajax({
         url: 'app/account',
         method: 'GET',

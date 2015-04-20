@@ -99,13 +99,15 @@
                 <label for="exp_amount_2">Income Amount</label>
                 <input type="text" name="exp_amount_2" id="exp_amount_2" value="" class="text ui-widget-content ui-corner-all">
                 <label for="exp_date_2">Income Date</label>
-                <input type="text" name="exp_date_2" id="exp_date_2" value="" class="text ui-widget-content ui-corner-all">
+                <input type="date" name="exp_date_2" id="exp_date_2" value="" class="text ui-widget-content ui-corner-all">
                 <label for="exp_category_2">Income Category</label>
                 <select id="exp_category_2" name="exp_category_2" value="" class="text ui-widget-content ui-corner-all">
-                    <option> -- Select a Category -- </option>
-                    <option id="1" class="category">Salary</option>
-                    <option id="2" class="category">Gift</option>
-                    <option id="3" class="category">Other</option>
+                        <option> -- Select a Category -- </option>
+                        <option id="1" class="category">Groceries</option>
+                        <option id="2" class="category">Home Rent</option>
+                        <option id="3" class="category">Car Insurance</option>
+                        <option id="4" class="category">Eating Out</option>
+                        <option id="5" class="category">Taxes/Fees</option>
                 </select>
 
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->

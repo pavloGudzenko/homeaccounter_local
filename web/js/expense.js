@@ -1,7 +1,7 @@
- $(document).ready(function(){
+$(document).ready(function() {
 
-    
-var id11;
+
+    var id11;
 
     $.ajax({
         url: 'app/expense',
@@ -15,23 +15,23 @@ var id11;
             });
         }
     });
-    
-    
+
+
     $.ajax({
         url: 'app/account',
         method: 'GET',
         dataType: 'json',
         contentType: 'application/json',
-            success: function(data) {
+        success: function(data) {
             $("#account").append("<option id=0 class='account1'> --  <i>Select an Account</i>  -- </option>");
-                $.each(data, function(key, item) {
-                    $("#account").append("<option id="+item.account_id+">" + item.account_name + "</option>");
+            $.each(data, function(key, item) {
+                $("#account").append("<option id=" + item.account_id + ">" + item.account_name + "</option>");
             });
         }
     });
-    
-     
-        $.ajax({
+
+
+    $.ajax({
         url: 'app/account',
         method: 'GET',
         dataType: 'json',
@@ -44,12 +44,12 @@ var id11;
             });
         }
     });
-    
-    
-    
- $('#table_expense').on('click', '.updatethis', function() {
-        id11 = $(this).attr('id');
 
+
+
+    $('#table_expense').on('click', '.updatethis', function() {
+        id11 = $(this).attr('id');
+        alert(id11);
         $("#forumupdate").dialog({
             autoOpen: true,
             height: 400,
@@ -69,18 +69,17 @@ var id11;
 
                         $.each(data, function(key, item) {
                             alert(item.inc_amount);
-                            $('#exp_amount_2').val(item.inc_amount);
-                            $('#exp_date_2').val(item.inc_date);
-                           $('#now').append("<input type='button'  tabindex='-1' id="+id11+" value='UPDATE' class='updatethisagain'/>");
+                            $('#exp_amount_2').val(item.exp_amount);
+                            $('#exp_date_2').val(item.exp_date);
+                            $('#now').append("<input type='button'  tabindex='-1' id=" + id11 + " value='UPDATE' class='updatethisagain'/>");
                         });
                     }
                 });
 
             },
-            
             close: function() {
                 $('#now').html("");
-           
+
             }
 
         });
@@ -89,61 +88,90 @@ var id11;
 
 
 
-$('#forumupdate').on('click', '.updatethisagain', function(){
-       
-        var id22=$(this).attr('id');
-      
-        updateIncome(id22);
+    $('#forumupdate').on('click', '.updatethisagain', function() {
+
+        var id22 = $(this).attr('id');
+
+        updateExpense(id22);
     });
-    
-    
-    
-    
-    
-  
+
+
+
+    function updateExpense(id1) {
+
+        var account_id = $('#account_2').children(':selected').attr('id');
+        alert(account_id);
+        var category_id = $('#exp_category_2').children(':selected').attr('id');
+        alert(category_id);
+        alert($('#exp_amount_2').val());
+        alert($('#exp_date_2').val());
+
+        $.ajax({
+            url: 'app/expense/list/' + id1,
+            method: "put",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                'account_id': account_id,
+                'exp_amount': $('#exp_amount_2').val(),
+                'exp_category_id': category_id,
+                'exp_date': $('#exp_date_2').val()
+            }),
+            success: function(data)
+            {
+                alert("okay");
+                location.href = "http://localhost:8080/homeaccounter_local/Expenses_add.jsp";
+            }
+        });
+
+
+    }
+
+
+
 });
 
 
- 
+
 
 
 
 
 function getAllAccounts() {
     $.ajax({
-       url: 'app/income/accounts',
-       method: 'GET',  
-       dataType: 'json', 
-       success: function(json) {
-             $.each(data, function(key, item) {
-                    $("#account").append("<option id="+item.account_id+" class='account'>" + item.account_name + "</option>");
-            });     
-       }
+        url: 'app/income/accounts',
+        method: 'GET',
+        dataType: 'json',
+        success: function(json) {
+            $.each(data, function(key, item) {
+                $("#account").append("<option id=" + item.account_id + " class='account'>" + item.account_name + "</option>");
+            });
+        }
     });
 }
 
 
 
 function addExpense() {
-var account_id=$('#account').children(':selected').attr('id');
-var category_id=$('#exp_category').children(':selected').attr('id');   
-$.ajax({
-    url: "app/expense", 
-    method: "post",
-    contentType: "application/json",
-    dataType:"json",
-    data: JSON.stringify({
-                  'account_id' : account_id,
-                  'exp_amount' : $('#exp_amount').val(),
-                  'exp_category_id': category_id,
-                  'exp_date': $('#exp_date').val()                 
-          }),
-    success: function(data)
-    {
-        alert("okay");
-        location.href="http://localhost:8080/homeaccounter_local/Expenses_add.jsp";
-    }
-});
+    var account_id = $('#account').children(':selected').attr('id');
+    var category_id = $('#exp_category').children(':selected').attr('id');
+    $.ajax({
+        url: "app/expense",
+        method: "post",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({
+            'account_id': account_id,
+            'exp_amount': $('#exp_amount').val(),
+            'exp_category_id': category_id,
+            'exp_date': $('#exp_date').val()
+        }),
+        success: function(data)
+        {
+            alert("okay");
+            location.href = "http://localhost:8080/homeaccounter_local/Expenses_add.jsp";
+        }
+    });
 
 
 }

@@ -162,7 +162,7 @@ public class ExpencesRestful {
     
 
     @PUT
-    @Path("{expence_id}")
+    @Path("/list/{expence_id}")
     @Consumes({"application/json"})
     @Produces({"application/json"})
     public Response edit(@PathParam("expence_id") String expence_id, JsonObject json) {
@@ -172,7 +172,7 @@ public class ExpencesRestful {
                 String exp_ammount = json.getString("exp_amount");
                 String exp_category_id = json.getString("exp_category_id");
                 String exp_date = json.getString("exp_date");
-         rowsUpdated = doUpdate("UPDATE product SET account_id = ?, exp_ammount =?, exp_category_id = ? exp_date = ? WHERE expence_id = ?", 
+         rowsUpdated = doUpdate("UPDATE expences SET account_id = ?, exp_ammount =?, exp_category_id = ?, exp_date = ? WHERE expence_id = ?", 
                                                  account_id, exp_ammount, exp_category_id, exp_date, expence_id);
            if (rowsUpdated == 0){
             response = Response.status(500).build();

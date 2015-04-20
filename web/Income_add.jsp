@@ -94,7 +94,7 @@
                 <label for="income_amount">Income Amount</label>
                 <input type="text" name="income_amount" id="income_amount_2" value="" class="text ui-widget-content ui-corner-all">
                 <label for="income_date">Income Date</label>
-                <input type="text" name="income_date" id="income_date_2" value="" class="text ui-widget-content ui-corner-all">
+                <input type="date" name="income_date" id="income_date_2" value="" class="text ui-widget-content ui-corner-all">
                 <label for="income_category">Income Category</label>
                 <select id="income_category_2" name="income_category" value="" class="text ui-widget-content ui-corner-all">
                     <option> -- Select a Category -- </option>

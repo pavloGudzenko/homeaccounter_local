@@ -145,7 +145,7 @@ public class ExpencesRestful {
     
     
     @DELETE
-    @Path("{expence_id}")
+    @Path("/list/{expence_id}")
     public Response remove(@PathParam("expence_id") String expence_id) {
         Response deleteResponse = null;
         int rowsDeleted = 0;

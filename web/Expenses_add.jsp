@@ -114,6 +114,15 @@
                 <div id="now"></div>
             </fieldset>
         </form>
+        
+        
+        
+        <form id="forumdelete">
+            <fieldset>
+                <p>Do you want to delete chosen Expense?</p>  
+                <div id="nowDelete"></div>
+            </fieldset>
+        </form>
 
 
 

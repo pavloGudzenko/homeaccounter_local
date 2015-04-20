@@ -22,6 +22,7 @@ var id11;
         dataType: 'json',
         contentType: 'application/json',
         success: function(data) {
+            alert('Success');
             $("#account").append("<option id=0 class='account1'> --  <i>Select an Account</i>  -- </option>");
             $.each(data, function(key, item) {
                 $("#account").append("<option id=" + item.account_id + " class='account1'>" + item.account_name + "</option>");
@@ -125,25 +126,6 @@ function updateIncome(id1) {
 }
 
 });
-
-
-
-
-
-
-//function getAllAccounts() {
-//    $.ajax({
-//       url: 'app/income/accounts',
-//       method: 'GET',  
-//       dataType: 'json', 
-//       success: function(json) {
-//           $('#account_select').append($('<option>').text(value).attr(''));
-//             $.each(json, function(i, value) {
-//            $('#account_select').append($('<option>').text(value).attr('value', value));
-//        });      
-//       }
-//    });
-//}
 
 
 

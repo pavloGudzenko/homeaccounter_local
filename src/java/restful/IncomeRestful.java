@@ -145,7 +145,7 @@ public class IncomeRestful {
     
     
     @DELETE
-    @Path("{/list/income_id}")
+    @Path("{income_id}")
     public Response remove(@PathParam("income_id") String income_id) {
         Response deleteResponse = null;
         int rowsDeleted = 0;

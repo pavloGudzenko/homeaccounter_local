@@ -37,7 +37,9 @@ public class ExpencesRestful {
     @GET
     @Produces("application/json")
     public Response findAll() throws IOException {
-        return Response.ok(getResults("SELECT * FROM expences")).build();
+        return Response.ok(getResults("SELECT expence_id, exp_ammount, exp_date, account_name, "
+                + "exp_category_name FROM expences JOIN accounts USING(account_id) "
+                + "JOIN exp_categories USING (exp_category_id) ORDER BY account_name, expence_id")).build();
     }
     
     
@@ -77,18 +79,18 @@ public class ExpencesRestful {
             PreparedStatement pstmt = conn.prepareStatement(query);
             for (int i = 1; i <= params.length; i++) {
                 pstmt.setString(i, params[i - 1]);
-            }
+            }        
             
             ResultSet rs = pstmt.executeQuery();
             
             JsonArrayBuilder jsonArray = Json.createArrayBuilder();
             while (rs.next()) {
                 jsonArray.add(Json.createObjectBuilder()
-                        .add("account_id", Integer.toString(rs.getInt("account_id")))
+                        .add("account_name", rs.getString("account_name"))
                         .add("expence_id", Integer.toString(rs.getInt("expence_id")))
                         .add("exp_amount", Double.toString(rs.getDouble("exp_ammount")))
-                        .add("exp_category_id", Integer.toString(rs.getInt("exp_category_id")))
-                        .add("exp_date", rs.getString("exp_date")));              
+                        .add("exp_category_name", rs.getString("exp_category_name"))
+                        .add("exp_date", rs.getString("exp_date")));               
             }
             
             JSONArray = jsonArray.build();

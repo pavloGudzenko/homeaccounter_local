@@ -6,6 +6,7 @@
 
 package restful;
 
+import beans.UserBean;
 import credentials.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
@@ -35,14 +36,15 @@ import javax.ws.rs.core.Response;
 @Path("/account")
 public class AccountRestful {
     @GET
+    @Path("/{username}")
     @Produces("application/json")
-    public Response findAll() throws IOException {
+    public Response findAll(@PathParam("username") String username) throws IOException {
         return Response.ok(getResults("SELECT account_id, account_name, description, sum(inc_ammount) as inc_ammount, "
                 + "sum(exp_ammount) as exp_ammount, sum(inc_ammount) - sum(exp_ammount) AS balance FROM "
                 + "(SELECT account_id, account_name, description, IF(inc_ammount IS NULL, 0.00, inc_ammount) as inc_ammount, "
                 + "IF(exp_ammount IS NULL, 0.00, exp_ammount) as exp_ammount FROM accounts LEFT JOIN incomes "
-                + "USING (account_id) LEFT JOIN expences USING (account_id)) as tbl "
-                + "GROUP BY account_id, account_name, description")).build();
+                + "USING (account_id) LEFT JOIN expences USING (account_id) WHERE username = ?) as tbl "
+                + "GROUP BY account_id, account_name, description", username)).build();
     }
     
     
@@ -62,7 +64,8 @@ public class AccountRestful {
           Response response;                
                 String account_name = json.getString("account_name");
                 String description = json.getString("description");
-         rowsInserted = doUpdate("INSERT INTO accounts (account_name, description) VALUES (?, ?)", account_name, description);
+                String username = json.getString("username");
+         rowsInserted = doUpdate("INSERT INTO accounts (account_name, description, username) VALUES (?, ?, ?)", account_name, description, username);
            if (rowsInserted == 0){
             response = Response.status(500).build();
            } else {
@@ -70,6 +73,7 @@ public class AccountRestful {
            }
            return response;
     }
+    
     
 
     private JsonArray getResults(String query, String... params) throws IOException {

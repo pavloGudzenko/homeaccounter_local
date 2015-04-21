@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 var id11;
     $.ajax({
-        url: 'app/income',
+        url: 'app/income/' + $("#user").val(),
         method: 'GET',
         dataType: 'json',
         contentType: 'application/json',
@@ -17,12 +17,12 @@ var id11;
 
 
     $.ajax({
-        url: 'app/account',
+        url: 'app/account/' + $("#user").val(),
         method: 'GET',
         dataType: 'json',
         contentType: 'application/json',
         success: function(data) {
-            alert('Success');
+           // alert('Success');
             $("#account").append("<option id=0 class='account1'> --  <i>Select an Account</i>  -- </option>");
             $.each(data, function(key, item) {
                 $("#account").append("<option id=" + item.account_id + " class='account1'>" + item.account_name + "</option>");
@@ -31,13 +31,13 @@ var id11;
     });
 
     $.ajax({
-        url: 'app/account',
+        url: 'app/account/' + $("#user").val(),
         method: 'GET',
         dataType: 'json',
         contentType: 'application/json',
         success: function(data) {
             $("#account_2").append("<option id=0 class='account1'> --  <i>Select an Account</i>  -- </option>");
-            alert('Ok');
+          //  alert('Ok');
             $.each(data, function(key, item) {
                 $("#account_2").append("<option id=" + item.account_id + " class='account1'>" + item.account_name + "</option>");
             });
@@ -68,7 +68,7 @@ var id11;
                     success: function(data) {
 
                         $.each(data, function(key, item) {
-                            alert(item.inc_amount);
+                        //    alert(item.inc_amount);
                             $('#income_amount_2').val(item.inc_amount);
                             $('#income_date_2').val(item.inc_date);
                            $('#now').append("<input type='button'  tabindex='-1' id="+id11+" value='UPDATE' class='updatethisagain'/>");
@@ -91,7 +91,7 @@ var id11;
     
            $('#table_income').on('click', '.deletethis', function() {
         id11 = $(this).attr('id');
-        alert(id11);
+      //  alert(id11);
         $("#forumdelete").dialog({
             autoOpen: true,
             height: 250,
@@ -110,7 +110,7 @@ var id11;
                     success: function(data) {
 
                         $.each(data, function(key, item) {
-                            alert(item.inc_amount);
+                        //    alert(item.inc_amount);
                             $('#nowDelete').append("<p>Do you want to delete chosen Income?</p>");
                             $('#nowDelete').append("<input type='button'  tabindex='-1' id=" + id11 + " value='Yes' class='deleteyes'/>");
                             $('#nowDelete').append("<input type='button'  tabindex='-1' value='No' class='deleteno'/>");
@@ -153,7 +153,7 @@ var id11;
             method: "delete",
             success: function(data)
             {
-                alert("okay");
+             //   alert("okay");
                 location.href = "http://localhost:8080/homeaccounter_local/Income_add.jsp";
             }
         });
@@ -176,9 +176,9 @@ function updateIncome(id1) {
     var account_id = $('#account_2').children(':selected').attr('id');
     alert(account_id);
     var category_id = $('#income_category_2').children(':selected').attr('id');
-    alert(category_id);
-    alert($('#income_amount_2').val());
-    alert($('#income_date_2').val());
+ //   alert(category_id);
+ //   alert($('#income_amount_2').val());
+ //   alert($('#income_date_2').val());
     
     $.ajax({
         url: 'app/income/list/' + id1,
@@ -193,8 +193,8 @@ function updateIncome(id1) {
         }),
         success: function(data)
         {
-            alert("okay");
-            location.href = "http://localhost:8080/homeaccounter_local/Income_add.jsp";
+         location.href = "http://localhost:8080/homeaccounter_local/Income_add.jsp";
+            alert("Successfully Updated");
         }
     });
 
@@ -224,8 +224,8 @@ function addIncome() {
         }),
         success: function(data)
         {
-            alert("okay");
-            location.href = "http://localhost:8080/homeaccounter_local/Income_add.jsp";
+           location.href = "http://localhost:8080/homeaccounter_local/Income_add.jsp";
+            alert("New Income was Added");
         }
     });
 

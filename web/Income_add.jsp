@@ -4,6 +4,7 @@
     Author     : c0650853
 --%>
 
+<%@page import="beans.UserBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -28,6 +29,9 @@
             #forumdelete{
                 display:none;
             }
+            #user{
+                display:none;
+            }
              body{
                 background-image: url("back.png");  
                 background-repeat: repeat-y;
@@ -44,6 +48,11 @@
     </head>
     <body>             
         <section>
+
+            <%UserBean currentUser = (UserBean)(session.getAttribute("currentSessionUser"));%>
+            <div id="ds">
+                <input type="text" value="<%= currentUser.getUsername()%>" id="user">
+            </div>
 
             <h2>Add new Income</h2>
 

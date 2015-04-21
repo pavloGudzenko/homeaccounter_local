@@ -3,7 +3,7 @@ $(document).ready(function() {
     var id11;
 
     $.ajax({
-        url: 'app/expense',
+        url: 'app/expense/' + $("#user").val(),
         method: 'GET',
         dataType: 'json',
         contentType: 'application/json',
@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 
     $.ajax({
-        url: 'app/account',
+        url: 'app/account/' + $("#user").val(),
         method: 'GET',
         dataType: 'json',
         contentType: 'application/json',
@@ -27,17 +27,22 @@ $(document).ready(function() {
                 $("#account").append("<option id=" + item.account_id + ">" + item.account_name + "</option>");
             });
         }
+        
+        
     });
+    
+    
+   
 
 
     $.ajax({
-        url: 'app/account',
+        url: 'app/account/' + $("#user").val(),
         method: 'GET',
         dataType: 'json',
         contentType: 'application/json',
         success: function(data) {
             $("#account_2").append("<option id=0 class='account1'> --  <i>Select an Account</i>  -- </option>");
-            alert('Ok');
+           // alert('Ok');
             $.each(data, function(key, item) {
                 $("#account_2").append("<option id=" + item.account_id + " class='account1'>" + item.account_name + "</option>");
             });
@@ -48,7 +53,7 @@ $(document).ready(function() {
 
     $('#table_expense').on('click', '.updatethis', function() {
         id11 = $(this).attr('id');
-        alert(id11);
+       // alert(id11);
         $("#forumupdate").dialog({
             autoOpen: true,
             height: 400,
@@ -67,7 +72,8 @@ $(document).ready(function() {
                     success: function(data) {
 
                         $.each(data, function(key, item) {
-                            alert(item.inc_amount);
+                        //    alert(item.inc_amount);
+                           // $("#exp_account_2").val(item.exp_)
                             $('#exp_amount_2').val(item.exp_amount);
                             $('#exp_date_2').val(item.exp_date);
                             $('#now').append("<input type='button'  tabindex='-1' id=" + id11 + " value='UPDATE' class='updatethisagain'/>");
@@ -151,7 +157,7 @@ alert('  inside');
             method: "delete",
             success: function(data)
             {
-                alert("okay");
+              //  alert("okay");
                 location.href = "http://localhost:8080/homeaccounter_local/Expenses_add.jsp";
             }
         });
@@ -173,11 +179,11 @@ alert('  inside');
     function updateExpense(id1) {
 
         var account_id = $('#account_2').children(':selected').attr('id');
-        alert(account_id);
+     //   alert(account_id);
         var category_id = $('#exp_category_2').children(':selected').attr('id');
-        alert(category_id);
-        alert($('#exp_amount_2').val());
-        alert($('#exp_date_2').val());
+     //   alert(category_id);
+     //   alert($('#exp_amount_2').val());
+     //   alert($('#exp_date_2').val());
 
         $.ajax({
             url: 'app/expense/list/' + id1,
@@ -192,8 +198,8 @@ alert('  inside');
             }),
             success: function(data)
             {
-                alert("okay");
                 location.href = "http://localhost:8080/homeaccounter_local/Expenses_add.jsp";
+                alert("Successfully Updated");
             }
         });
 

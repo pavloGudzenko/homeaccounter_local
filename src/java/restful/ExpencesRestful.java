@@ -35,11 +35,12 @@ import javax.ws.rs.core.Response;
 @Path("/expense")
 public class ExpencesRestful {
     @GET
+    @Path("/{username}")
     @Produces("application/json")
-    public Response findAll() throws IOException {
+    public Response findAll(@PathParam("username") String username) throws IOException {
         return Response.ok(getResults("SELECT expence_id, exp_ammount, exp_date, account_name, "
                 + "exp_category_name FROM expences JOIN accounts USING(account_id) "
-                + "JOIN exp_categories USING (exp_category_id) ORDER BY account_name, expence_id")).build();
+                + "JOIN exp_categories USING (exp_category_id) where username = ? ORDER BY account_name, expence_id", username)).build();
     }
     
     

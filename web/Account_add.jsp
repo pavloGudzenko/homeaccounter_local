@@ -4,6 +4,7 @@
     Author     : c0650853
 --%>
 
+<%@page import="beans.UserBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -28,6 +29,9 @@
             #forumdelete{
                 display:none;
             }
+            #user{
+                display:none;
+            }
             body{
                 background-image: url("back.png");  
                 background-repeat: repeat-y;
@@ -43,8 +47,13 @@
         <script src="js/account.js"></script>
 
     </head>
-    <body>
+    <body> 
         <section>
+            <%UserBean currentUser = (UserBean)(session.getAttribute("currentSessionUser"));%>
+            <div id="ds">
+                <input type="text" value="<%= currentUser.getUsername()%>" id="user">
+                <center><h3>Welcome, <%= currentUser.getFirstName() + " " + currentUser.getLastName()%></h3></center>
+                </div>
 
             <div id="accout_show">
                 <table id="table_account" border="1">
@@ -58,18 +67,13 @@
             </div>        
 
             
-            <h1>Account Form</h1>
+            <h1>Add New Account</h1>
 
             <form>
 
                 <fieldset id="add_account">
 
-                    <label for="account">Account</label>
-                    <select id="account"></select>
-                    <br>
-                    <br>
-
-                    <label for="account_name">Account Name</label>
+                    <label for="account_name">Account</label>
                     <input type="text" name="account_name" id="account_name">
                     <br>
                     <br>
@@ -80,7 +84,7 @@
                     <br>
                     <br>
 
-                    <input type="button" onclick="addAccount()" value="Add Income"></button>
+                    <input type="button" onclick="addAccount()" value="Add Account">
 
                 </fieldset>
             </form>

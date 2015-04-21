@@ -35,11 +35,12 @@ import credentials.DBConnection;
 @Path("/income")
 public class IncomeRestful {
    @GET
+  @Path("/{username}")
     @Produces("application/json")
-    public Response findAll() throws IOException {
+    public Response findAll(@PathParam("username") String username) throws IOException {
         return Response.ok(getResults("SELECT income_id, inc_ammount, inc_date, account_name, "
                 + "inc_category_name FROM incomes JOIN accounts USING(account_id) "
-                + "JOIN inc_categories USING (inc_category_id) ORDER BY account_name, income_id")).build();
+                + "JOIN inc_categories USING (inc_category_id) WHERE username = ? ORDER BY account_name, income_id", username)).build();
     }
     
     

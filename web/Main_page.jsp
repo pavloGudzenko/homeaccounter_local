@@ -4,6 +4,7 @@
     Author     : c0650853
 --%>
 
+<%@page import="beans.UserBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,10 @@
         <title>HomeAccounter</title>
     </head>
     <body>
+     <%UserBean currentUser = (UserBean)(session.getAttribute("currentSessionUser"));%>
+            <div id="ds">
+                <h3>Welcome, <%= currentUser.getFirstName() + " " + currentUser.getLastName()%></h3>
+                </div>
         <h1>HomeAccounter</h1>
         <br>
         <br>

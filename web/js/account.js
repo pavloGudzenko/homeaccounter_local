@@ -1,9 +1,8 @@
 $(document).ready(function(){
 
 var id11;
-    
     $.ajax({
-       url: 'app/account',
+       url: 'app/account/' + $("#user").val(),
        method: 'GET',  
        dataType: 'json', 
       contentType:'application/json',
@@ -15,23 +14,11 @@ var id11;
   }
 });
 
-
-    $.ajax({
-        url: 'app/account',
-        method: 'GET',
-        dataType: 'json',
-        contentType: 'application/json',
-            success: function(data) {
-                $.each(data, function(key, item) {
-                    $("#account").append("<option id="+item.account_id+">" + item.account_name + "</option>");
-            });
-        }
-    });
     
     
         $('#table_account').on('click', '.deletethis', function() {
         id11 = $(this).attr('id');
-        alert(id11+'  here');
+   //     alert(id11+'  here');
         $("#forumdelete").dialog({
             autoOpen: true,
             height: 250,
@@ -92,7 +79,7 @@ var id11;
             method: "delete",
             success: function(data)
             {
-                alert("okay");
+              //  alert("okay");
                 location.href = "http://localhost:8080/homeaccounter_local/Account_add.jsp";
             }
         });
@@ -112,7 +99,6 @@ var id11;
 
 
 function addAccount() {
-alert("KK");
 $.ajax({
     url: "app/account", 
     method: "post",
@@ -120,11 +106,14 @@ $.ajax({
     dataType:"json",
     data: JSON.stringify({
                   'account_name' : $('#account_name').val(),
-                  'description': $('#description').val()             
+                  'description': $('#description').val(),
+                  'username': $("#user").val()
           }),
     success: function(data)
     {
-        alert("okay");
+        location.href = "http://localhost:8080/homeaccounter_local/Account_add.jsp";
+        alert("Account successfully added");
+        
     }
 });
 

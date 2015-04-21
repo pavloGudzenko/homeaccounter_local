@@ -13,31 +13,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Page</title>
-	    <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="main_css.css" />   
     </head>
     <body>
-	
-	
-            <section id="login_section">
+
+        <section class="container">
+            <div class="login">
+                <h1>Login to HomeAccounter</h1>
 		<form action="LoginServlet">
-                    
-                  <fieldset id="login">
-		    <legend>Please Login</legend>
-
-			 
-                        <label for="user_name">Username</label>
-			<input type="text" name="user_name" id="user_name"/>
-                        </br>	
-
 		
-                        <label for="pass">Password</label>
-			<input type="password" name="pass" id="pass"/>
-			</br>		
-
-			<input type="submit" value="Sign In">
-                  </fieldset>  
+			<input type="text" name="user_name" placeholder="enter username"/><br>		
+		
+			<input type="password" name="pass" placeholder="enter password"/>
+			
+			<input type="submit" value="submit">			
 		
 		</form>
-            </section>    
-	</body>
+            </div>
+        </section>    
+    </body>
 </html>

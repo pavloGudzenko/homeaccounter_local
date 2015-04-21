@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.6
+-- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2015 at 03:48 AM
--- Server version: 5.6.16
--- PHP Version: 5.5.9
+-- Generation Time: Apr 21, 2015 at 08:54 AM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -29,21 +29,21 @@ USE `homeaccounter`;
 --
 
 CREATE TABLE IF NOT EXISTS `accounts` (
-  `account_id` int(11) NOT NULL AUTO_INCREMENT,
+`account_id` int(11) NOT NULL,
   `account_name` varchar(30) NOT NULL,
   `description` text,
-  PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  `username` varchar(20) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`account_id`, `account_name`, `description`) VALUES
-(1, '1235656', 'asdggh'),
-(2, 'TD Debit 00001', 'Debit Card in TD CANADA TRUST'),
-(3, 'TD Visa', ''),
-(4, 'AC1289865', 'New account');
+INSERT INTO `accounts` (`account_id`, `account_name`, `description`, `username`) VALUES
+(1, '1235656', 'asdggh', 'pavlentiy'),
+(2, 'TD Debit 00001', 'Debit Card in TD CANADA TRUST', 'pavlentiy'),
+(4, 'AC1289865', 'New account', ''),
+(9, '1234 5432 2345 1234', 'Debit Card TD', 'len');
 
 -- --------------------------------------------------------
 
@@ -52,15 +52,12 @@ INSERT INTO `accounts` (`account_id`, `account_name`, `description`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `expences` (
-  `expence_id` int(11) NOT NULL AUTO_INCREMENT,
+`expence_id` int(11) NOT NULL,
   `exp_ammount` decimal(8,2) NOT NULL,
   `exp_date` date DEFAULT NULL,
   `exp_category_id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
-  PRIMARY KEY (`expence_id`),
-  KEY `expence_account_fk` (`account_id`),
-  KEY `expence_category_fk` (`exp_category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  `account_id` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `expences`
@@ -69,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `expences` (
 INSERT INTO `expences` (`expence_id`, `exp_ammount`, `exp_date`, `exp_category_id`, `account_id`) VALUES
 (1, '20.00', '2015-04-17', 5, 1),
 (2, '100.00', '2015-04-03', 1, 2),
-(3, '100.00', '2015-04-18', 1, 3);
+(4, '100.00', '2015-04-20', 1, 9);
 
 -- --------------------------------------------------------
 
@@ -78,9 +75,8 @@ INSERT INTO `expences` (`expence_id`, `exp_ammount`, `exp_date`, `exp_category_i
 --
 
 CREATE TABLE IF NOT EXISTS `exp_categories` (
-  `exp_category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `exp_category_name` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`exp_category_id`)
+`exp_category_id` int(11) NOT NULL,
+  `exp_category_name` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
@@ -106,22 +102,19 @@ INSERT INTO `exp_categories` (`exp_category_id`, `exp_category_name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `incomes` (
-  `income_id` int(11) NOT NULL AUTO_INCREMENT,
+`income_id` int(11) NOT NULL,
   `inc_ammount` decimal(8,2) NOT NULL,
   `inc_date` date DEFAULT NULL,
   `inc_category_id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
-  PRIMARY KEY (`income_id`),
-  KEY `income_category_fk` (`inc_category_id`),
-  KEY `income_account` (`account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+  `account_id` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `incomes`
 --
 
 INSERT INTO `incomes` (`income_id`, `inc_ammount`, `inc_date`, `inc_category_id`, `account_id`) VALUES
-(1, '1.00', '2015-04-12', 1, 1),
+(1, '11.00', '2015-04-12', 2, 2),
 (2, '1500.00', '2015-04-12', 1, 1),
 (3, '500.00', '0012-02-12', 1, 1),
 (5, '2133.00', '2015-04-17', 1, 2),
@@ -129,7 +122,8 @@ INSERT INTO `incomes` (`income_id`, `inc_ammount`, `inc_date`, `inc_category_id`
 (7, '10.00', '2015-04-10', 1, 1),
 (14, '45644.00', '2015-04-07', 2, 1),
 (15, '36333.00', '2015-04-07', 2, 2),
-(16, '433453.00', '2015-04-14', 2, 2);
+(16, '433453.00', '2015-04-14', 2, 2),
+(17, '500.00', '2015-04-20', 2, 9);
 
 -- --------------------------------------------------------
 
@@ -138,9 +132,8 @@ INSERT INTO `incomes` (`income_id`, `inc_ammount`, `inc_date`, `inc_category_id`
 --
 
 CREATE TABLE IF NOT EXISTS `inc_categories` (
-  `inc_category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `inc_category_name` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`inc_category_id`)
+`inc_category_id` int(11) NOT NULL,
+  `inc_category_name` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
@@ -159,22 +152,95 @@ INSERT INTO `inc_categories` (`inc_category_id`, `inc_category_name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+`user_id` int(11) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(25) NOT NULL,
   `username` varchar(35) NOT NULL,
-  `password` varchar(35) NOT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `unique_user_uq` (`username`,`password`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  `password` varchar(35) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password`) VALUES
-(1, 'Pavlo', 'Gudzenko', 'pavlentiy', 'GudPav');
+(1, 'Pavlo', 'Gudzenko', 'pavlentiy', 'GudPav'),
+(2, 'Len', 'Payne', 'len', 'len');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `accounts`
+--
+ALTER TABLE `accounts`
+ ADD PRIMARY KEY (`account_id`);
+
+--
+-- Indexes for table `expences`
+--
+ALTER TABLE `expences`
+ ADD PRIMARY KEY (`expence_id`), ADD KEY `expence_account_fk` (`account_id`), ADD KEY `expence_category_fk` (`exp_category_id`);
+
+--
+-- Indexes for table `exp_categories`
+--
+ALTER TABLE `exp_categories`
+ ADD PRIMARY KEY (`exp_category_id`);
+
+--
+-- Indexes for table `incomes`
+--
+ALTER TABLE `incomes`
+ ADD PRIMARY KEY (`income_id`), ADD KEY `income_category_fk` (`inc_category_id`), ADD KEY `income_account` (`account_id`);
+
+--
+-- Indexes for table `inc_categories`
+--
+ALTER TABLE `inc_categories`
+ ADD PRIMARY KEY (`inc_category_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+ ADD PRIMARY KEY (`user_id`), ADD UNIQUE KEY `unique_user_uq` (`username`,`password`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `accounts`
+--
+ALTER TABLE `accounts`
+MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `expences`
+--
+ALTER TABLE `expences`
+MODIFY `expence_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `exp_categories`
+--
+ALTER TABLE `exp_categories`
+MODIFY `exp_category_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `incomes`
+--
+ALTER TABLE `incomes`
+MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+--
+-- AUTO_INCREMENT for table `inc_categories`
+--
+ALTER TABLE `inc_categories`
+MODIFY `inc_category_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -183,15 +249,15 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `password
 -- Constraints for table `expences`
 --
 ALTER TABLE `expences`
-  ADD CONSTRAINT `expence_account_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
-  ADD CONSTRAINT `expence_category_fk` FOREIGN KEY (`exp_category_id`) REFERENCES `exp_categories` (`exp_category_id`);
+ADD CONSTRAINT `expence_account_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
+ADD CONSTRAINT `expence_category_fk` FOREIGN KEY (`exp_category_id`) REFERENCES `exp_categories` (`exp_category_id`);
 
 --
 -- Constraints for table `incomes`
 --
 ALTER TABLE `incomes`
-  ADD CONSTRAINT `income_account` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
-  ADD CONSTRAINT `income_category_fk` FOREIGN KEY (`inc_category_id`) REFERENCES `inc_categories` (`inc_category_id`);
+ADD CONSTRAINT `income_account` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
+ADD CONSTRAINT `income_category_fk` FOREIGN KEY (`inc_category_id`) REFERENCES `inc_categories` (`inc_category_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

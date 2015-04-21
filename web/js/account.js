@@ -38,8 +38,8 @@ var id11;
 
                         $.each(data, function(key, item) {
                             $('#nowDelete').append("<p>Do you want to delete chosen Account and all his Incomes and Expenses?</p>");
-                            $('#nowDelete').append("<input type='button'  tabindex='-1' id=" + id11 + " value='Yes' class='deleteyes'/>");
-                            $('#nowDelete').append("<input type='button'  tabindex='-1' value='No' class='deleteno'/>");
+                            $('#nowDelete').append("<div id='b'><input type='button'  tabindex='-1' id=" + id11 + " value='Yes' class='deleteyes'/>");
+                            $('#nowDelete').append("<input type='button'  tabindex='-1' value='No' class='deleteno'/></div>");
                         });
                     }
                 });

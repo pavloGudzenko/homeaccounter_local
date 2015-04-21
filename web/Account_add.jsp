@@ -13,6 +13,7 @@
         <title>Account</title>
         <style>
 
+            #b { display: inline;}
             label, input { display:block; padding: 3px; }
             input.text { margin-bottom:12px; width:95%; padding: .4em; }
             fieldset { padding:0; border:0; margin-top:25px; }

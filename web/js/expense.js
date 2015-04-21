@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
     var id11;
 
     $.ajax({
@@ -110,6 +109,7 @@ $(document).ready(function() {
 
                         $.each(data, function(key, item) {
                             alert(item.inc_amount);
+                            $('#nowDelete').append("<p>Do you want to delete chosen Expense?</p>");
                             $('#nowDelete').append("<input type='button'  tabindex='-1' id=" + id11 + " value='Yes' class='deleteyes'/>");
                             $('#nowDelete').append("<input type='button'  tabindex='-1' value='No' class='deleteno'/>");
                         });
@@ -133,6 +133,13 @@ $(document).ready(function() {
         var id22 = $(this).attr('id');
 
         deleteExpense(id22);
+    });
+    
+    
+    $('#forumdelete').on('click', '.deleteno', function() {
+
+            $("#forumdelete").dialog('close');
+            $('#nowDelete').html("");
     });
     
     

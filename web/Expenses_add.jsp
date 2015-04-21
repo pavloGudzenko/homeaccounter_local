@@ -39,7 +39,6 @@
          <form>
 
                 <fieldset id="add_expense">
-                    <legend> Add Expense</legend>
 
                     <label for="account">Account</label>
                     <select id="account"></select>
@@ -118,8 +117,7 @@
         
         
         <form id="forumdelete">
-            <fieldset>
-                <p>Do you want to delete chosen Expense?</p>  
+            <fieldset> 
                 <div id="nowDelete"></div>
             </fieldset>
         </form>

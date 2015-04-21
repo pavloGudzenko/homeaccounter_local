@@ -88,6 +88,81 @@ var id11;
     });
     
     
+    
+           $('#table_income').on('click', '.deletethis', function() {
+        id11 = $(this).attr('id');
+        alert(id11);
+        $("#forumdelete").dialog({
+            autoOpen: true,
+            height: 250,
+            width: 350,
+            modal: true,
+            draggable: false,
+            resizable: false,
+            show: 'slide',
+            open: function() {
+
+                $.ajax({
+                    url: 'app/income/list/' + id11,
+                    method: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function(data) {
+
+                        $.each(data, function(key, item) {
+                            alert(item.inc_amount);
+                            $('#nowDelete').append("<p>Do you want to delete chosen Income?</p>");
+                            $('#nowDelete').append("<input type='button'  tabindex='-1' id=" + id11 + " value='Yes' class='deleteyes'/>");
+                            $('#nowDelete').append("<input type='button'  tabindex='-1' value='No' class='deleteno'/>");
+                        });
+                    }
+                });
+
+            },
+            close: function() {
+                $('#nowDelete').html("");
+
+            }
+
+        });
+
+    });
+
+
+
+    $('#forumdelete').on('click', '.deleteyes', function() {
+
+        var id22 = $(this).attr('id');
+
+        deleteIncome(id22);
+    });
+    
+    
+    $('#forumdelete').on('click', '.deleteno', function() {
+
+            $("#forumdelete").dialog('close');
+            $('#nowDelete').html("");
+    });
+    
+    
+    
+    function deleteIncome(id1) {
+
+        $.ajax({
+            url: 'app/income/list/' + id1,
+            method: "delete",
+            success: function(data)
+            {
+                alert("okay");
+                location.href = "http://localhost:8080/homeaccounter_local/Income_add.jsp";
+            }
+        });
+
+
+    }
+    
+    
+    
     $('#forumupdate').on('click', '.updatethisagain', function(){
        
         var id22=$(this).attr('id');

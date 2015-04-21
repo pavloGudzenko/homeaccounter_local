@@ -107,6 +107,13 @@
                 <div id="now"></div>
             </fieldset>
         </form>
+        
+        
+        <form id="forumdelete">
+            <fieldset> 
+                <div id="nowDelete"></div>
+            </fieldset>
+        </form>
 
 
     </body>

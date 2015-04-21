@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+var id11;
     
     $.ajax({
        url: 'app/account',
@@ -9,7 +10,7 @@ $(document).ready(function(){
     success: function( data ) {
          
       $.each(data, function(key, item){ 
-        $("#table_account").append("<tr><td>"+item.account_name+"</td><td>"+item.inc_ammount+"</td><td>"+item.exp_ammount+"</td><td>"+item.balance+"</td><td>"+item.description+"</td><td><input type='button' onclick='' value='Delete'></button></td></tr>");
+        $("#table_account").append("<tr id=" + item.account_id + "><td>"+item.account_name+"</td><td>"+item.inc_ammount+"</td><td>"+item.exp_ammount+"</td><td>"+item.balance+"</td><td>"+item.description+"</td><td><input type='button' onclick='' id=" + item.account_id + " class='deletethis' value='Delete'></button></td></tr>");
       });
   }
 });
@@ -28,7 +29,76 @@ $(document).ready(function(){
     });
     
     
+        $('#table_account').on('click', '.deletethis', function() {
+        id11 = $(this).attr('id');
+        alert(id11+'  here');
+        $("#forumdelete").dialog({
+            autoOpen: true,
+            height: 250,
+            width: 350,
+            modal: true,
+            draggable: false,
+            resizable: false,
+            show: 'slide',
+            open: function() {
+
+                $.ajax({
+                    url: 'app/account/list/' + id11,
+                    method: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function(data) {
+
+                        $.each(data, function(key, item) {
+                            $('#nowDelete').append("<p>Do you want to delete chosen Account and all his Incomes and Expenses?</p>");
+                            $('#nowDelete').append("<input type='button'  tabindex='-1' id=" + id11 + " value='Yes' class='deleteyes'/>");
+                            $('#nowDelete').append("<input type='button'  tabindex='-1' value='No' class='deleteno'/>");
+                        });
+                    }
+                });
+
+            },
+            close: function() {
+                $('#nowDelete').html("");
+
+            }
+
+        });
+
+    });
+
+
+
+    $('#forumdelete').on('click', '.deleteyes', function() {
+
+        var id22 = $(this).attr('id');
+
+        deleteAccount(id22);
+    });
     
+    
+    $('#forumdelete').on('click', '.deleteno', function() {
+
+            $("#forumdelete").dialog('close');
+            $('#nowDelete').html("");
+    });
+    
+    
+    
+    function deleteAccount(id1) {
+
+        $.ajax({
+            url: 'app/account/list/' + id1,
+            method: "delete",
+            success: function(data)
+            {
+                alert("okay");
+                location.href = "http://localhost:8080/homeaccounter_local/Account_add.jsp";
+            }
+        });
+
+
+    }   
     
 
 

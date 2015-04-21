@@ -86,6 +86,13 @@
 
                 </fieldset>
             </form>
+            
+            
+        <form id="forumdelete">
+            <fieldset> 
+                <div id="nowDelete"></div>
+            </fieldset>
+        </form>
 
         </section>
 

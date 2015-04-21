@@ -47,7 +47,7 @@ public class AccountRestful {
     
     
     @GET
-    @Path("{account_id}")
+    @Path("/list/{account_id}")
     @Produces("application/json")
     public Response find(@PathParam("account_id") String income_id) throws IOException {
         return Response.ok(getResultsById("SELECT * FROM accounts WHERE account_id = ?", income_id)).build();
@@ -146,7 +146,7 @@ public class AccountRestful {
     
     
     @DELETE
-    @Path("{account_id}")
+    @Path("/list/{account_id}")
     public Response remove(@PathParam("account_id") String account_id) {
         Response deleteResponse = null;
         int rowsDeleted = 0;

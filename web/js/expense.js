@@ -99,7 +99,7 @@ $(document).ready(function() {
             resizable: false,
             show: 'slide',
             open: function() {
-
+alert('  inside');
                 $.ajax({
                     url: 'app/expense/list/' + id11,
                     method: 'GET',

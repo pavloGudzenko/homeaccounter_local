@@ -151,6 +151,8 @@ public class AccountRestful {
         Response deleteResponse = null;
         int rowsDeleted = 0;
         
+        rowsDeleted = doUpdate("DELETE FROM expences WHERE account_id = ?", account_id);
+        rowsDeleted = doUpdate("DELETE FROM incomes WHERE account_id = ?", account_id);
         rowsDeleted = doUpdate("DELETE FROM accounts WHERE account_id = ?", account_id);
         
         if (rowsDeleted == 0){

@@ -37,7 +37,12 @@ public class AccountRestful {
     @GET
     @Produces("application/json")
     public Response findAll() throws IOException {
-        return Response.ok(getResults("SELECT * FROM accounts")).build();
+        return Response.ok(getResults("SELECT account_id, account_name, description, sum(inc_ammount) as inc_ammount, "
+                + "sum(exp_ammount) as exp_ammount, sum(inc_ammount) - sum(exp_ammount) AS balance FROM "
+                + "(SELECT account_id, account_name, description, IF(inc_ammount IS NULL, 0.00, inc_ammount) as inc_ammount, "
+                + "IF(exp_ammount IS NULL, 0.00, exp_ammount) as exp_ammount FROM accounts LEFT JOIN incomes "
+                + "USING (account_id) LEFT JOIN expences USING (account_id)) as tbl "
+                + "GROUP BY account_id, account_name, description")).build();
     }
     
     
@@ -45,7 +50,7 @@ public class AccountRestful {
     @Path("{account_id}")
     @Produces("application/json")
     public Response find(@PathParam("account_id") String income_id) throws IOException {
-        return Response.ok(getResults("SELECT * FROM accounts WHERE account_id = ?", income_id)).build();
+        return Response.ok(getResultsById("SELECT * FROM accounts WHERE account_id = ?", income_id)).build();
     }
 
 
@@ -83,8 +88,40 @@ public class AccountRestful {
                 jsonArray.add(Json.createObjectBuilder()
                         .add("account_id", Integer.toString(rs.getInt("account_id")))
                         .add("account_name", rs.getString("account_name"))
+                        .add("description", rs.getString("description"))
+                        .add("inc_ammount", rs.getString("inc_ammount"))
+                        .add("exp_ammount", rs.getString("exp_ammount"))
+                        .add("balance", rs.getString("balance")));              
+            }
+            
+            
+            JSONArray = jsonArray.build();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(IncomeRestful.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return JSONArray;
+    }
+    
+    
+        private JsonArray getResultsById(String query, String... params) throws IOException {
+        JsonArray JSONArray = null;
+
+        try (Connection conn = DBConnection.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            for (int i = 1; i <= params.length; i++) {
+                pstmt.setString(i, params[i - 1]);
+            }
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            JsonArrayBuilder jsonArray = Json.createArrayBuilder();
+            while (rs.next()) {
+                jsonArray.add(Json.createObjectBuilder()
+                        .add("account_id", Integer.toString(rs.getInt("account_id")))
+                        .add("account_name", rs.getString("account_name"))
                         .add("description", rs.getString("description")));              
             }
+            
             
             JSONArray = jsonArray.build();
         } catch (ClassNotFoundException | SQLException ex) {

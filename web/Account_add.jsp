@@ -47,6 +47,9 @@
             <div id="accout_show">
                 <table id="table_account" border="1">
                     <th>Account Name</th>
+                    <th>Income Amount</th>
+                    <th>Expense Amount</th>
+                    <th>Balance</th>
                     <th>Account Description</th>
                     <th>Delete Account</th>
                 </table>    

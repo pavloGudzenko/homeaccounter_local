@@ -9,7 +9,7 @@ $(document).ready(function(){
     success: function( data ) {
          
       $.each(data, function(key, item){ 
-        $("#table_account").append("<tr><td>"+item.account_name+"</td><td>"+item.description+"</td><td><input type='button' onclick='' value='Delete'></button></td></tr>");
+        $("#table_account").append("<tr><td>"+item.account_name+"</td><td>"+item.inc_ammount+"</td><td>"+item.exp_ammount+"</td><td>"+item.balance+"</td><td>"+item.description+"</td><td><input type='button' onclick='' value='Delete'></button></td></tr>");
       });
   }
 });
